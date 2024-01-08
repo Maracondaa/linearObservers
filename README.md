@@ -21,16 +21,24 @@ The Non-Prewhitening observer is used to model human performance in detecting si
 
 The Prewhitening observer is an extension of the Non-Prewhitening observer. It considers both the image and the noise power spectrum to calculate the observer response.
 - image: The reconstructed image.
-- noise_power_spectrum: The power spectrum of the noise.
+- target_mean: The first-order statistic (mean) of the target signal
+- background_mean: The first-order statistic (mean) of the background
+- background_variance: The second-order statistic (variance) of the target signal
+- noise_mean: The first-order statistic (mean) of the noise
+- noise_variance: The second-order statistic (variance) of the noise
 
 ### 4. Hotelling Observer:
-
-The Hotelling observer is commonly used in medical imaging. It uses the inverse covariance matrix of the background.
-- image: The flattened reconstructed image.
-- covariance_matrix: The covariance matrix of the background.
+The Hotelling observer is commonly used in medical imaging. It uses both first- and second-order statistics of the signal, background and noise.
+- image: The reconstructed image.
+- target_mean: The first-order statistic (mean) of the target signal
+- target_variance: The second-order statistic (variance) of the background
+- background_mean: The first-order statistic (mean) of the background
+- background_variance: The second-order statistic (variance) of the target signal
+- noise_mean: The first-order statistic (mean) of the noise
+- noise_variance: The second-order statistic (variance) of the noise
 
 ## Creation of synthetic test images:
-To be able to test the observers synthetic images are created by first creating a White Gaussian Background, adding an optional disk-shaped target and then adding Gaussian noise. The result is given as a matrix.
+To be able to test the observers synthetic images are created by first creating a White Gaussian Background, adding an optional disk-shaped target and then adding white Gaussian noise. The result is given as a matrix.
 
 ## Assumptions:
-First- and second-order statistics of the target signal, the background and tne noise are known.
+First- and second-order statistics of the target signal, the background and the noise are known.

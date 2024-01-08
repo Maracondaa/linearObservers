@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from createImages import generate_synthetic_image
-from linearObservers import region_of_interest_observer, non_pre_whitening_observer, region_of_interest_observer_ske
+from linearObservers import region_of_interest_observer, non_pre_whitening_observer, region_of_interest_observer_ske, \
+    pre_whitening_observer, hotelling_observer
 
 
 def main():
@@ -45,16 +46,30 @@ def main():
     roi_response_without_target = region_of_interest_observer(image_without_target, target_mean)
 
     print('ROI Observer (signal present): ', roi_response_with_target)
-    print('ROI Observer (signal absent): ', roi_response_without_target, "\n")
+    print('ROI Observer (signal absent): ', roi_response_without_target, '\n')
 
-    # Calculation of the linear discriminant for the ROI observer for both images
+    # Calculation of the linear discriminant for the NPW observer for both images
     npw_response_with_target = non_pre_whitening_observer(image_with_target, target_mean, 0, 0)
     npw_response_without_target = non_pre_whitening_observer(image_without_target, target_mean, 0, 0)
 
     print('NPW Observer (signal present): ', npw_response_with_target)
-    print('NPW Observer (signal absent): ', npw_response_without_target)
+    print('NPW Observer (signal absent): ', npw_response_without_target, '\n')
 
-    # PW & Hotelling Observer
+    # Calculation of the linear discriminant for the PW observer for both images
+    pw_response_with_target = pre_whitening_observer(image_with_target, target_mean, 0, 1, 0, noise_std)
+    pw_response_without_target = pre_whitening_observer(image_without_target, target_mean, 0, 1, 0, noise_std)
+
+    print('PW Observer (signal present): ', pw_response_with_target)
+    print('PW Observer (signal absent): ', pw_response_without_target, "\n")
+
+    # Calculation of the linear discriminant for the Hotelling observer for both images
+    ho_response_with_target = hotelling_observer(image_with_target, target_mean, 0, 0, 1, 0,
+                                                 noise_std, 0.5, 0.5)
+    ho_response_without_target = hotelling_observer(image_without_target, target_mean, 0, 0, 1, 0,
+                                                    noise_std, 0.5, 0.5)
+
+    print('HO Observer (signal present): ', ho_response_with_target)
+    print('HO Observer (signal absent): ', ho_response_without_target)
 
     return
 
